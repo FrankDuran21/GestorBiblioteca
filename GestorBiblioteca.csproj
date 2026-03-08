@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
