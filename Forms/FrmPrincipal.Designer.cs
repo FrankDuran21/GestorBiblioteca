@@ -140,6 +140,7 @@
             btnEditar.TabIndex = 12;
             btnEditar.Text = "Editar";
             btnEditar.UseVisualStyleBackColor = true;
+            btnEditar.Click += btnEditar_Click;
             // 
             // btnEliminar
             // 
@@ -149,6 +150,7 @@
             btnEliminar.TabIndex = 13;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // dgvLibros
             // 
@@ -157,6 +159,7 @@
             dgvLibros.Name = "dgvLibros";
             dgvLibros.Size = new Size(531, 345);
             dgvLibros.TabIndex = 14;
+            dgvLibros.CellClick += dgvLibros_CellClick;
             // 
             // FrmPrincipal
             // 

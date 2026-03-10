@@ -8,21 +8,26 @@ namespace GestorBiblioteca.Forms
     public partial class FrmPrincipal : Form
     {
         private BibliotecaService biblioteca = new BibliotecaService();
+        private BindingSource bsLibros = new BindingSource();
 
         public FrmPrincipal()
         {
             InitializeComponent();
+
             dgvLibros.AllowUserToAddRows = false;
             dgvLibros.MultiSelect = false;
             dgvLibros.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvLibros.ReadOnly = true;
-            CargarLibros();
+            dgvLibros.AutoGenerateColumns = true;
+
+            bsLibros.DataSource = biblioteca.ObtenerLibros();
+            dgvLibros.DataSource = bsLibros;
         }
 
-        private void CargarLibros()
+        private void RefrescarLibros()
         {
-            dgvLibros.DataSource = null;
-            dgvLibros.DataSource = biblioteca.ObtenerLibros();
+            bsLibros.ResetBindings(false);
+            dgvLibros.ClearSelection();
         }
 
         private bool ValidarCampos(out int id, out int anio)
@@ -75,7 +80,7 @@ namespace GestorBiblioteca.Forms
             };
 
             biblioteca.AgregarLibro(libro);
-            CargarLibros();
+            RefrescarLibros();
             LimpiarCampos();
 
             MessageBox.Show("Libro agregado correctamente.");
@@ -103,7 +108,7 @@ namespace GestorBiblioteca.Forms
                 return;
             }
 
-            CargarLibros();
+            RefrescarLibros();
             LimpiarCampos();
 
             MessageBox.Show("Libro editado correctamente.");
@@ -125,10 +130,25 @@ namespace GestorBiblioteca.Forms
                 return;
             }
 
-            CargarLibros();
+            RefrescarLibros();
             LimpiarCampos();
 
             MessageBox.Show("Libro eliminado correctamente.");
+        }
+
+        private void dgvLibros_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvLibros.Rows.Count)
+                return;
+
+            if (dgvLibros.Rows[e.RowIndex].DataBoundItem is not Libro libroSeleccionado)
+                return;
+
+            txtID.Text = libroSeleccionado.Id.ToString();
+            txtTitulo.Text = libroSeleccionado.Titulo;
+            txtAutor.Text = libroSeleccionado.Autor;
+            txtAño.Text = libroSeleccionado.Anio.ToString();
+            chkDisponible.Checked = libroSeleccionado.Disponible;
         }
 
         private void LimpiarCampos()
