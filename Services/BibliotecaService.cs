@@ -1,45 +1,54 @@
 ﻿using GestorBiblioteca.Models;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace GestorBiblioteca.Services
 {
     public class BibliotecaService
     {
-        public List<Libro> Libros { get; set; } = new List<Libro>();
-        public List<Usuario> Usuarios { get; set; } = new List<Usuario>();
-        public List<Prestamo> Prestamos { get; set; } = new List<Prestamo>();
+        public BindingList<Libro> Libros { get; set; } = new BindingList<Libro>();
+        public BindingList<Usuario> Usuarios { get; set; } = new BindingList<Usuario>();
+        public BindingList<Prestamo> Prestamos { get; set; } = new BindingList<Prestamo>();
 
         public void AgregarLibro(Libro libro)
         {
             Libros.Add(libro);
         }
 
-        public List<Libro> ObtenerLibros()
+        public BindingList<Libro> ObtenerLibros()
         {
             return Libros;
         }
 
-        public void EliminarLibro(int id)
+        public bool ExisteLibro(int id)
         {
-            var libro = Libros.FirstOrDefault(l => l.Id == id);
-            if (libro != null)
-            {
-                Libros.Remove(libro);
-            }
+            return Libros.Any(l => l.Id == id);
         }
 
-        public void ActualizarLibro(Libro libroActualizado)
+        public bool EliminarLibro(int id)
+        {
+            var libro = Libros.FirstOrDefault(l => l.Id == id);
+
+            if (libro == null)
+                return false;
+
+            Libros.Remove(libro);
+            return true;
+        }
+
+        public bool ActualizarLibro(Libro libroActualizado)
         {
             var libro = Libros.FirstOrDefault(l => l.Id == libroActualizado.Id);
 
-            if (libro != null)
-            {
-                libro.Titulo = libroActualizado.Titulo;
-                libro.Autor = libroActualizado.Autor;
-                libro.Anio = libroActualizado.Anio;
-                libro.Disponible = libroActualizado.Disponible;
-            }
+            if (libro == null)
+                return false;
+
+            libro.Titulo = libroActualizado.Titulo;
+            libro.Autor = libroActualizado.Autor;
+            libro.Anio = libroActualizado.Anio;
+            libro.Disponible = libroActualizado.Disponible;
+
+            return true;
         }
     }
 }

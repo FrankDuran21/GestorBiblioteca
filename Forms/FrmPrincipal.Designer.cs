@@ -157,7 +157,6 @@
             dgvLibros.Name = "dgvLibros";
             dgvLibros.Size = new Size(531, 345);
             dgvLibros.TabIndex = 14;
-            dgvLibros.CellClick += dgvLibros_CellClick;
             // 
             // FrmPrincipal
             // 
