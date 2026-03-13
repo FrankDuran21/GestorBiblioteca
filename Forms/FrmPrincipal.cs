@@ -153,7 +153,7 @@ namespace GestorBiblioteca.Forms
             chkDisponible.Checked = libroSeleccionado.Disponible;
         }
 
-        private void LimpiarCampos()
+        private void LimpiarCampos() 
         {
             txtID.Text = "";
             txtTitulo.Text = "";
