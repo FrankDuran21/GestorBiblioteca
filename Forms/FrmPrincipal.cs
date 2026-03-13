@@ -26,7 +26,9 @@ namespace GestorBiblioteca.Forms
 
         private void RefrescarLibros()
         {
-            bsLibros.ResetBindings(false);
+            bsLibros.DataSource = null;
+            bsLibros.DataSource = biblioteca.ObtenerLibros();
+            dgvLibros.DataSource = bsLibros;
             dgvLibros.ClearSelection();
         }
 
@@ -158,6 +160,11 @@ namespace GestorBiblioteca.Forms
             txtAutor.Text = "";
             txtAño.Text = "";
             chkDisponible.Checked = false;
+        }
+
+        private void dgvLibros_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

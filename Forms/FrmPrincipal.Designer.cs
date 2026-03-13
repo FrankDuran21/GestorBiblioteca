@@ -47,7 +47,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(120, 27);
+            label2.Location = new Point(45, 27);
             label2.Name = "label2";
             label2.Size = new Size(18, 15);
             label2.TabIndex = 2;
@@ -56,7 +56,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(252, 27);
+            label3.Location = new Point(178, 27);
             label3.Name = "label3";
             label3.Size = new Size(38, 15);
             label3.TabIndex = 3;
@@ -65,7 +65,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(389, 27);
+            label4.Location = new Point(312, 27);
             label4.Name = "label4";
             label4.Size = new Size(37, 15);
             label4.TabIndex = 4;
@@ -74,7 +74,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(536, 27);
+            label5.Location = new Point(439, 27);
             label5.Name = "label5";
             label5.Size = new Size(29, 15);
             label5.TabIndex = 5;
@@ -82,7 +82,7 @@
             // 
             // txtID
             // 
-            txtID.Location = new Point(120, 94);
+            txtID.Location = new Point(45, 64);
             txtID.Name = "txtID";
             txtID.Size = new Size(100, 23);
             txtID.TabIndex = 6;
@@ -90,7 +90,7 @@
             // 
             // txtTitulo
             // 
-            txtTitulo.Location = new Point(252, 94);
+            txtTitulo.Location = new Point(178, 64);
             txtTitulo.Name = "txtTitulo";
             txtTitulo.Size = new Size(100, 23);
             txtTitulo.TabIndex = 7;
@@ -98,7 +98,7 @@
             // 
             // txtAutor
             // 
-            txtAutor.Location = new Point(389, 94);
+            txtAutor.Location = new Point(312, 64);
             txtAutor.Name = "txtAutor";
             txtAutor.Size = new Size(100, 23);
             txtAutor.TabIndex = 8;
@@ -106,7 +106,7 @@
             // 
             // txtAño
             // 
-            txtAño.Location = new Point(536, 94);
+            txtAño.Location = new Point(439, 64);
             txtAño.Name = "txtAño";
             txtAño.Size = new Size(100, 23);
             txtAño.TabIndex = 9;
@@ -115,7 +115,7 @@
             // chkDisponible
             // 
             chkDisponible.AutoSize = true;
-            chkDisponible.Location = new Point(120, 170);
+            chkDisponible.Location = new Point(45, 151);
             chkDisponible.Name = "chkDisponible";
             chkDisponible.Size = new Size(82, 19);
             chkDisponible.TabIndex = 10;
@@ -124,7 +124,7 @@
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(120, 265);
+            btnAgregar.Location = new Point(45, 253);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(75, 23);
             btnAgregar.TabIndex = 11;
@@ -134,7 +134,7 @@
             // 
             // btnEditar
             // 
-            btnEditar.Location = new Point(239, 265);
+            btnEditar.Location = new Point(178, 253);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(75, 23);
             btnEditar.TabIndex = 12;
@@ -144,7 +144,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(366, 265);
+            btnEliminar.Location = new Point(312, 253);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(75, 23);
             btnEliminar.TabIndex = 13;
@@ -154,12 +154,14 @@
             // 
             // dgvLibros
             // 
+            dgvLibros.BackgroundColor = SystemColors.ControlDarkDark;
             dgvLibros.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLibros.Location = new Point(536, 210);
+            dgvLibros.Location = new Point(453, 142);
             dgvLibros.Name = "dgvLibros";
-            dgvLibros.Size = new Size(531, 345);
+            dgvLibros.Size = new Size(614, 413);
             dgvLibros.TabIndex = 14;
             dgvLibros.CellClick += dgvLibros_CellClick;
+            dgvLibros.CellContentClick += dgvLibros_CellContentClick;
             // 
             // FrmPrincipal
             // 

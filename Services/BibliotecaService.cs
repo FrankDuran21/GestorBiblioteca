@@ -1,44 +1,31 @@
 ﻿using GestorBiblioteca.Models;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GestorBiblioteca.Services
 {
     public class BibliotecaService
     {
-        public BindingList<Libro> Libros { get; set; } = new BindingList<Libro>();
-        public BindingList<Usuario> Usuarios { get; set; } = new BindingList<Usuario>();
-        public BindingList<Prestamo> Prestamos { get; set; } = new BindingList<Prestamo>();
+        private List<Libro> libros = new List<Libro>();
 
-        public void AgregarLibro(Libro libro)
+        public List<Libro> ObtenerLibros()
         {
-            Libros.Add(libro);
-        }
-
-        public BindingList<Libro> ObtenerLibros()
-        {
-            return Libros;
+            return libros.OrderBy(l => l.Id).ToList();
         }
 
         public bool ExisteLibro(int id)
         {
-            return Libros.Any(l => l.Id == id);
+            return libros.Any(l => l.Id == id);
         }
 
-        public bool EliminarLibro(int id)
+        public void AgregarLibro(Libro libro)
         {
-            var libro = Libros.FirstOrDefault(l => l.Id == id);
-
-            if (libro == null)
-                return false;
-
-            Libros.Remove(libro);
-            return true;
+            libros.Add(libro);
         }
 
         public bool ActualizarLibro(Libro libroActualizado)
         {
-            var libro = Libros.FirstOrDefault(l => l.Id == libroActualizado.Id);
+            var libro = libros.FirstOrDefault(l => l.Id == libroActualizado.Id);
 
             if (libro == null)
                 return false;
@@ -48,6 +35,17 @@ namespace GestorBiblioteca.Services
             libro.Anio = libroActualizado.Anio;
             libro.Disponible = libroActualizado.Disponible;
 
+            return true;
+        }
+
+        public bool EliminarLibro(int id)
+        {
+            var libro = libros.FirstOrDefault(l => l.Id == id);
+
+            if (libro == null)
+                return false;
+
+            libros.Remove(libro);
             return true;
         }
     }
