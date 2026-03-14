@@ -6,7 +6,17 @@ namespace GestorBiblioteca.Services
 {
     public class BibliotecaService
     {
+        // ==============================
+        // LISTAS DE DATOS
+        // ==============================
+
         private List<Libro> libros = new List<Libro>();
+        private List<Usuario> usuarios = new List<Usuario>();
+
+
+        // ==============================
+        // CRUD DE LIBROS
+        // ==============================
 
         public List<Libro> ObtenerLibros()
         {
@@ -46,6 +56,51 @@ namespace GestorBiblioteca.Services
                 return false;
 
             libros.Remove(libro);
+            return true;
+        }
+
+
+        // ==============================
+        // CRUD DE USUARIOS
+        // ==============================
+
+        public List<Usuario> ObtenerUsuarios()
+        {
+            return usuarios.OrderBy(u => u.Id).ToList();
+        }
+
+        public bool ExisteUsuario(int id)
+        {
+            return usuarios.Any(u => u.Id == id);
+        }
+
+        public void AgregarUsuario(Usuario usuario)
+        {
+            usuarios.Add(usuario);
+        }
+
+        public bool ActualizarUsuario(Usuario usuarioActualizado)
+        {
+            var usuario = usuarios.FirstOrDefault(u => u.Id == usuarioActualizado.Id);
+
+            if (usuario == null)
+                return false;
+
+            usuario.Nombre = usuarioActualizado.Nombre;
+            usuario.Correo = usuarioActualizado.Correo;
+            usuario.Activo = usuarioActualizado.Activo;
+
+            return true;
+        }
+
+        public bool EliminarUsuario(int id)
+        {
+            var usuario = usuarios.FirstOrDefault(u => u.Id == id);
+
+            if (usuario == null)
+                return false;
+
+            usuarios.Remove(usuario);
             return true;
         }
     }
