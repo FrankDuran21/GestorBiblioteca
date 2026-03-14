@@ -46,8 +46,7 @@ namespace GestorBiblioteca.Forms
             dgvPrestamos.AutoGenerateColumns = true;
             dgvPrestamos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            bsPrestamos.DataSource = biblioteca.ObtenerPrestamos();
-            dgvPrestamos.DataSource = bsPrestamos;
+            RefrescarPrestamos();
         }
 
         // ===============================
@@ -72,8 +71,22 @@ namespace GestorBiblioteca.Forms
 
         private void RefrescarPrestamos()
         {
+            var prestamos = biblioteca.ObtenerPrestamos();
+            var usuarios = biblioteca.ObtenerUsuarios();
+            var libros = biblioteca.ObtenerLibros();
+
+            var datos = prestamos.Select(p => new
+            {
+                p.Id,
+                Usuario = usuarios.FirstOrDefault(u => u.Id == p.IdUsuario)?.Nombre,
+                Libro = libros.FirstOrDefault(l => l.Id == p.IdLibro)?.Titulo,
+                p.FechaPrestamo,
+                p.FechaDevolucion,
+                p.Estado
+            }).ToList();
+
             bsPrestamos.DataSource = null;
-            bsPrestamos.DataSource = biblioteca.ObtenerPrestamos();
+            bsPrestamos.DataSource = datos;
             dgvPrestamos.DataSource = bsPrestamos;
             dgvPrestamos.ClearSelection();
         }
