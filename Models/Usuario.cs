@@ -6,5 +6,7 @@
         public string Nombre { get; set; } = "";
         public string Correo { get; set; } = "";
         public bool Activo { get; set; } = true;
+        public int CantidadPrestamos { get; set; }
+
     }
 }

@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -43,6 +49,8 @@
             dgvLibros = new DataGridView();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            chartUsuariosActivos = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            chartLibrosPrestados = new System.Windows.Forms.DataVisualization.Charting.Chart();
             label1 = new Label();
             tabPage2 = new TabPage();
             dgvPrestamos = new DataGridView();
@@ -69,9 +77,12 @@
             lblCorreoUsuario = new Label();
             lblNombreUsuario = new Label();
             lblIdUsuario = new Label();
+            checkBox1 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dgvLibros).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)chartUsuariosActivos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chartLibrosPrestados).BeginInit();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPrestamos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
@@ -215,6 +226,9 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.Silver;
+            tabPage1.Controls.Add(checkBox1);
+            tabPage1.Controls.Add(chartUsuariosActivos);
+            tabPage1.Controls.Add(chartLibrosPrestados);
             tabPage1.Controls.Add(label1);
             tabPage1.Controls.Add(dgvLibros);
             tabPage1.Controls.Add(label4);
@@ -235,6 +249,40 @@
             tabPage1.Size = new Size(1623, 825);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Libros y Graficas";
+            // 
+            // chartUsuariosActivos
+            // 
+            chartArea1.Name = "ChartArea1";
+            chartUsuariosActivos.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chartUsuariosActivos.Legends.Add(legend1);
+            chartUsuariosActivos.Location = new Point(893, 434);
+            chartUsuariosActivos.Name = "chartUsuariosActivos";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chartUsuariosActivos.Series.Add(series1);
+            chartUsuariosActivos.Size = new Size(630, 300);
+            chartUsuariosActivos.TabIndex = 17;
+            chartUsuariosActivos.Text = "chart2";
+            // 
+            // chartLibrosPrestados
+            // 
+            chartArea2.Name = "ChartArea1";
+            chartLibrosPrestados.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            chartLibrosPrestados.Legends.Add(legend2);
+            chartLibrosPrestados.Location = new Point(893, 47);
+            chartLibrosPrestados.Name = "chartLibrosPrestados";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            chartLibrosPrestados.Series.Add(series2);
+            chartLibrosPrestados.Size = new Size(630, 300);
+            chartLibrosPrestados.TabIndex = 16;
+            chartLibrosPrestados.Text = "chart1";
             // 
             // label1
             // 
@@ -513,6 +561,16 @@
             lblIdUsuario.TabIndex = 0;
             lblIdUsuario.Text = "ID Usuario";
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(1415, 386);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(82, 19);
+            checkBox1.TabIndex = 18;
+            checkBox1.Text = "checkBox1";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // FrmPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -527,6 +585,8 @@
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)chartUsuariosActivos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chartLibrosPrestados).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPrestamos).EndInit();
@@ -576,5 +636,8 @@
         private TextBox txtIdLibroPrestamo;
         private TextBox txtIdUsuarioPrestamo;
         private TextBox txtIdPrestamo;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartUsuariosActivos;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartLibrosPrestados;
+        private CheckBox checkBox1;
     }
 }

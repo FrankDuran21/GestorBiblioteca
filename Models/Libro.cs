@@ -11,5 +11,8 @@
         public int Anio { get; set; }
 
         public bool Disponible { get; set; }
+
+        public int VecesPrestado { get; set; }
+
     }
 }

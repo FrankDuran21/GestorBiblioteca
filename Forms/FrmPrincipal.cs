@@ -1,7 +1,9 @@
 using GestorBiblioteca.Models;
 using GestorBiblioteca.Services;
 using System;
+using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GestorBiblioteca.Forms
 {
@@ -47,6 +49,7 @@ namespace GestorBiblioteca.Forms
             dgvPrestamos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             RefrescarPrestamos();
+            CargarGraficas();
         }
 
         // ===============================
@@ -159,6 +162,7 @@ namespace GestorBiblioteca.Forms
 
             biblioteca.AgregarLibro(libro);
             RefrescarLibros();
+            CargarGraficas();
             LimpiarCamposLibro();
 
             MessageBox.Show("Libro agregado correctamente.");
@@ -187,6 +191,7 @@ namespace GestorBiblioteca.Forms
             }
 
             RefrescarLibros();
+            CargarGraficas();
             LimpiarCamposLibro();
 
             MessageBox.Show("Libro editado correctamente.");
@@ -209,6 +214,7 @@ namespace GestorBiblioteca.Forms
             }
 
             RefrescarLibros();
+            CargarGraficas();
             LimpiarCamposLibro();
 
             MessageBox.Show("Libro eliminado correctamente.");
@@ -291,6 +297,7 @@ namespace GestorBiblioteca.Forms
 
             biblioteca.AgregarUsuario(usuario);
             RefrescarUsuarios();
+            CargarGraficas();
             LimpiarCamposUsuario();
 
             MessageBox.Show("Usuario agregado correctamente.");
@@ -318,6 +325,7 @@ namespace GestorBiblioteca.Forms
             }
 
             RefrescarUsuarios();
+            CargarGraficas();
             LimpiarCamposUsuario();
 
             MessageBox.Show("Usuario editado correctamente.");
@@ -340,6 +348,7 @@ namespace GestorBiblioteca.Forms
             }
 
             RefrescarUsuarios();
+            CargarGraficas();
             LimpiarCamposUsuario();
 
             MessageBox.Show("Usuario eliminado correctamente.");
@@ -408,6 +417,8 @@ namespace GestorBiblioteca.Forms
 
             RefrescarPrestamos();
             RefrescarLibros();
+            RefrescarUsuarios();
+            CargarGraficas();
 
             MessageBox.Show("Préstamo registrado correctamente.");
         }
@@ -430,26 +441,120 @@ namespace GestorBiblioteca.Forms
 
             RefrescarPrestamos();
             RefrescarLibros();
+            RefrescarUsuarios();
+            CargarGraficas();
 
             MessageBox.Show("Libro devuelto correctamente.");
         }
 
         private void dgvPrestamos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.RowIndex >= dgvPrestamos.Rows.Count)
+            if (e.RowIndex < 0)
                 return;
 
-            if (dgvPrestamos.Rows[e.RowIndex].DataBoundItem is not Prestamo prestamo)
-                return;
-
-            txtIdPrestamo.Text = prestamo.Id.ToString();
-            txtIdUsuarioPrestamo.Text = prestamo.IdUsuario.ToString();
-            txtIdLibroPrestamo.Text = prestamo.IdLibro.ToString();
-            dtpFechaPrestamo.Value = prestamo.FechaPrestamo;
+            txtIdPrestamo.Text = dgvPrestamos.Rows[e.RowIndex].Cells["Id"].Value?.ToString();
         }
 
         private void dgvPrestamos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
         }
+
+        // ===============================
+        // GRAFICAS
+        // ===============================
+
+        private void CargarGraficas()
+        {
+            // =========================
+            // LIBROS MÁS PRESTADOS
+            // =========================
+            chartLibrosPrestados.Series.Clear();
+            chartLibrosPrestados.Titles.Clear();
+            chartLibrosPrestados.ChartAreas.Clear();
+            chartLibrosPrestados.Legends.Clear();
+
+            ChartArea areaLibros = new ChartArea("AreaLibros");
+            areaLibros.BackColor = Color.White;
+            areaLibros.AxisX.MajorGrid.Enabled = false;
+            areaLibros.AxisY.MajorGrid.Enabled = false;
+            areaLibros.AxisX.Interval = 1;
+            areaLibros.AxisY.Interval = 1;
+            areaLibros.AxisX.LineColor = Color.Black;
+            areaLibros.AxisY.LineColor = Color.Black;
+            chartLibrosPrestados.ChartAreas.Add(areaLibros);
+
+            Title tituloLibros = new Title("Libros más prestados");
+            tituloLibros.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            chartLibrosPrestados.Titles.Add(tituloLibros);
+
+            Series serieLibros = new Series("Libros");
+            serieLibros.ChartType = SeriesChartType.Bar;
+            serieLibros.IsValueShownAsLabel = true;
+            serieLibros["PointWidth"] = "0.5";
+
+            var librosMasPrestados = biblioteca.ObtenerLibrosMasPrestados();
+
+            foreach (var libro in librosMasPrestados)
+            {
+                DataPoint punto = new DataPoint();
+                punto.SetValueY(libro.VecesPrestado);
+                punto.AxisLabel = libro.Titulo;
+                punto.Label = libro.VecesPrestado.ToString();
+                serieLibros.Points.Add(punto);
+            }
+
+            chartLibrosPrestados.Series.Add(serieLibros);
+
+            Legend legendLibros = new Legend();
+            legendLibros.Docking = Docking.Right;
+            chartLibrosPrestados.Legends.Add(legendLibros);
+
+
+            // =========================
+            // USUARIOS MÁS ACTIVOS
+            // =========================
+            chartUsuariosActivos.Series.Clear();
+            chartUsuariosActivos.Titles.Clear();
+            chartUsuariosActivos.ChartAreas.Clear();
+            chartUsuariosActivos.Legends.Clear();
+
+            ChartArea areaUsuarios = new ChartArea("AreaUsuarios");
+            areaUsuarios.BackColor = Color.White;
+            areaUsuarios.AxisX.MajorGrid.Enabled = false;
+            areaUsuarios.AxisY.MajorGrid.Enabled = false;
+            areaUsuarios.AxisX.Interval = 1;
+            areaUsuarios.AxisY.Interval = 1;
+            areaUsuarios.AxisX.LineColor = Color.Black;
+            areaUsuarios.AxisY.LineColor = Color.Black;
+            chartUsuariosActivos.ChartAreas.Add(areaUsuarios);
+
+            Title tituloUsuarios = new Title("Usuarios más activos");
+            tituloUsuarios.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            chartUsuariosActivos.Titles.Add(tituloUsuarios);
+
+            Series serieUsuarios = new Series("Usuarios");
+            serieUsuarios.ChartType = SeriesChartType.Bar;
+            serieUsuarios.IsValueShownAsLabel = true;
+            serieUsuarios["PointWidth"] = "0.5";
+
+            var usuariosMasActivos = biblioteca.ObtenerUsuariosMasActivos();
+
+            foreach (var usuario in usuariosMasActivos)
+            {
+                DataPoint punto = new DataPoint();
+                punto.SetValueY(usuario.CantidadPrestamos);
+                punto.AxisLabel = usuario.Nombre;
+                punto.Label = usuario.CantidadPrestamos.ToString();
+                serieUsuarios.Points.Add(punto);
+            }
+
+            chartUsuariosActivos.Series.Add(serieUsuarios);
+
+            Legend legendUsuarios = new Legend();
+            legendUsuarios.Docking = Docking.Right;
+            chartUsuariosActivos.Legends.Add(legendUsuarios);
+        }
+
+
     }
 }

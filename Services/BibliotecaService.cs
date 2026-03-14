@@ -1,4 +1,5 @@
 ﻿using GestorBiblioteca.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,6 @@ namespace GestorBiblioteca.Services
         private List<Libro> libros = new List<Libro>();
         private List<Usuario> usuarios = new List<Usuario>();
         private List<Prestamo> prestamos = new List<Prestamo>();
-
 
         // ==============================
         // CRUD DE LIBROS
@@ -101,7 +101,7 @@ namespace GestorBiblioteca.Services
         }
 
         // ==============================
-        // CRUD DE PRESTAMOS
+        // CRUD DE PRÉSTAMOS
         // ==============================
 
         public List<Prestamo> ObtenerPrestamos()
@@ -131,6 +131,9 @@ namespace GestorBiblioteca.Services
             prestamos.Add(prestamo);
             libro.Disponible = false;
 
+            libro.VecesPrestado++;
+            usuario.CantidadPrestamos++;
+
             return true;
         }
 
@@ -159,6 +162,28 @@ namespace GestorBiblioteca.Services
             return prestamos
                 .Where(p => p.IdUsuario == idUsuario)
                 .OrderBy(p => p.Id)
+                .ToList();
+        }
+
+        // ==============================
+        // DATOS PARA GRÁFICAS
+        // ==============================
+
+        public List<Libro> ObtenerLibrosMasPrestados()
+        {
+            return libros
+                .Where(l => l.VecesPrestado > 0)
+                .OrderByDescending(l => l.VecesPrestado)
+                .Take(5)
+                .ToList();
+        }
+
+        public List<Usuario> ObtenerUsuariosMasActivos()
+        {
+            return usuarios
+                .Where(u => u.CantidadPrestamos > 0)
+                .OrderByDescending(u => u.CantidadPrestamos)
+                .Take(5)
                 .ToList();
         }
 
