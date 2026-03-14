@@ -6,13 +6,8 @@ namespace GestorBiblioteca.Services
 {
     public class BibliotecaService
     {
-        // ==============================
-        // LISTAS DE DATOS
-        // ==============================
-
         private List<Libro> libros = new List<Libro>();
         private List<Usuario> usuarios = new List<Usuario>();
-
 
         // ==============================
         // CRUD DE LIBROS
@@ -58,7 +53,6 @@ namespace GestorBiblioteca.Services
             libros.Remove(libro);
             return true;
         }
-
 
         // ==============================
         // CRUD DE USUARIOS
