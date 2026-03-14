@@ -10,6 +10,7 @@ namespace GestorBiblioteca.Forms
         private BibliotecaService biblioteca = new BibliotecaService();
         private BindingSource bsLibros = new BindingSource();
         private BindingSource bsUsuarios = new BindingSource();
+        private BindingSource bsPrestamos = new BindingSource();
 
         public FrmPrincipal()
         {
@@ -32,9 +33,21 @@ namespace GestorBiblioteca.Forms
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsuarios.ReadOnly = true;
             dgvUsuarios.AutoGenerateColumns = true;
+            dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             bsUsuarios.DataSource = biblioteca.ObtenerUsuarios();
             dgvUsuarios.DataSource = bsUsuarios;
+
+            // TABLA PRESTAMOS
+            dgvPrestamos.AllowUserToAddRows = false;
+            dgvPrestamos.MultiSelect = false;
+            dgvPrestamos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPrestamos.ReadOnly = true;
+            dgvPrestamos.AutoGenerateColumns = true;
+            dgvPrestamos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            bsPrestamos.DataSource = biblioteca.ObtenerPrestamos();
+            dgvPrestamos.DataSource = bsPrestamos;
         }
 
         // ===============================
@@ -55,6 +68,14 @@ namespace GestorBiblioteca.Forms
             bsUsuarios.DataSource = biblioteca.ObtenerUsuarios();
             dgvUsuarios.DataSource = bsUsuarios;
             dgvUsuarios.ClearSelection();
+        }
+
+        private void RefrescarPrestamos()
+        {
+            bsPrestamos.DataSource = null;
+            bsPrestamos.DataSource = biblioteca.ObtenerPrestamos();
+            dgvPrestamos.DataSource = bsPrestamos;
+            dgvPrestamos.ClearSelection();
         }
 
         // ===============================
@@ -323,6 +344,99 @@ namespace GestorBiblioteca.Forms
             txtNombreUsuario.Text = usuarioSeleccionado.Nombre;
             txtCorreoUsuario.Text = usuarioSeleccionado.Correo;
             chkActivoUsuario.Checked = usuarioSeleccionado.Activo;
+        }
+
+        // ===============================
+        // PRÉSTAMOS
+        // ===============================
+
+        private void btnRegistrarPrestamo_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtIdPrestamo.Text, out int idPrestamo))
+            {
+                MessageBox.Show("ID de préstamo inválido.");
+                return;
+            }
+
+            if (!int.TryParse(txtIdUsuarioPrestamo.Text, out int idUsuario))
+            {
+                MessageBox.Show("ID de usuario inválido.");
+                return;
+            }
+
+            if (!int.TryParse(txtIdLibroPrestamo.Text, out int idLibro))
+            {
+                MessageBox.Show("ID de libro inválido.");
+                return;
+            }
+
+            if (biblioteca.ExistePrestamo(idPrestamo))
+            {
+                MessageBox.Show("Ya existe un préstamo con ese ID.");
+                return;
+            }
+
+            Prestamo prestamo = new Prestamo()
+            {
+                Id = idPrestamo,
+                IdUsuario = idUsuario,
+                IdLibro = idLibro,
+                FechaPrestamo = dtpFechaPrestamo.Value,
+                Estado = "Prestado"
+            };
+
+            bool registrado = biblioteca.RegistrarPrestamo(prestamo);
+
+            if (!registrado)
+            {
+                MessageBox.Show("No se pudo registrar el préstamo. Verifica usuario, libro o disponibilidad.");
+                return;
+            }
+
+            RefrescarPrestamos();
+            RefrescarLibros();
+
+            MessageBox.Show("Préstamo registrado correctamente.");
+        }
+
+        private void btnRegistrarDevolucion_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtIdPrestamo.Text, out int idPrestamo))
+            {
+                MessageBox.Show("ID de préstamo inválido.");
+                return;
+            }
+
+            bool devuelto = biblioteca.RegistrarDevolucion(idPrestamo);
+
+            if (!devuelto)
+            {
+                MessageBox.Show("No se pudo registrar la devolución.");
+                return;
+            }
+
+            RefrescarPrestamos();
+            RefrescarLibros();
+
+            MessageBox.Show("Libro devuelto correctamente.");
+        }
+
+        private void dgvPrestamos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dgvPrestamos.Rows.Count)
+                return;
+
+            if (dgvPrestamos.Rows[e.RowIndex].DataBoundItem is not Prestamo prestamo)
+                return;
+
+            txtIdPrestamo.Text = prestamo.Id.ToString();
+            txtIdUsuarioPrestamo.Text = prestamo.IdUsuario.ToString();
+            txtIdLibroPrestamo.Text = prestamo.IdLibro.ToString();
+            dtpFechaPrestamo.Value = prestamo.FechaPrestamo;
+        }
+
+        private void dgvPrestamos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
         }
     }
 }

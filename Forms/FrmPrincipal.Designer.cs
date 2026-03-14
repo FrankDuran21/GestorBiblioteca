@@ -45,6 +45,18 @@
             tabPage1 = new TabPage();
             label1 = new Label();
             tabPage2 = new TabPage();
+            dgvPrestamos = new DataGridView();
+            btnRegistrarDevolucion = new Button();
+            btnRegistrarPrestamo = new Button();
+            dtpFechaPrestamo = new DateTimePicker();
+            txtIdLibroPrestamo = new TextBox();
+            txtIdUsuarioPrestamo = new TextBox();
+            txtIdPrestamo = new TextBox();
+            lblIdPrestamo = new Label();
+            lblIdUsuarioPrestamo = new Label();
+            lblIdLibroPrestamo = new Label();
+            lblFechaPrestamo = new Label();
+            label7 = new Label();
             label6 = new Label();
             dgvUsuarios = new DataGridView();
             btnEditarUsuario = new Button();
@@ -61,6 +73,7 @@
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPrestamos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             SuspendLayout();
             // 
@@ -145,7 +158,7 @@
             // btnAgregar
             // 
             btnAgregar.BackColor = Color.FromArgb(192, 255, 192);
-            btnAgregar.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAgregar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAgregar.Location = new Point(29, 194);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(75, 27);
@@ -157,7 +170,7 @@
             // btnEditar
             // 
             btnEditar.BackColor = Color.LightSkyBlue;
-            btnEditar.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnEditar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditar.Location = new Point(153, 194);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(75, 27);
@@ -169,7 +182,7 @@
             // btnEliminar
             // 
             btnEliminar.BackColor = Color.LightCoral;
-            btnEliminar.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnEliminar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEliminar.Location = new Point(281, 194);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(75, 27);
@@ -196,7 +209,7 @@
             tabControl1.Location = new Point(2, 12);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1369, 853);
+            tabControl1.Size = new Size(1631, 853);
             tabControl1.TabIndex = 15;
             // 
             // tabPage1
@@ -219,9 +232,9 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1361, 825);
+            tabPage1.Size = new Size(1623, 825);
             tabPage1.TabIndex = 0;
-            tabPage1.Text = "Libros";
+            tabPage1.Text = "Libros y Graficas";
             // 
             // label1
             // 
@@ -237,6 +250,18 @@
             // tabPage2
             // 
             tabPage2.BackColor = Color.Silver;
+            tabPage2.Controls.Add(dgvPrestamos);
+            tabPage2.Controls.Add(btnRegistrarDevolucion);
+            tabPage2.Controls.Add(btnRegistrarPrestamo);
+            tabPage2.Controls.Add(dtpFechaPrestamo);
+            tabPage2.Controls.Add(txtIdLibroPrestamo);
+            tabPage2.Controls.Add(txtIdUsuarioPrestamo);
+            tabPage2.Controls.Add(txtIdPrestamo);
+            tabPage2.Controls.Add(lblIdPrestamo);
+            tabPage2.Controls.Add(lblIdUsuarioPrestamo);
+            tabPage2.Controls.Add(lblIdLibroPrestamo);
+            tabPage2.Controls.Add(lblFechaPrestamo);
+            tabPage2.Controls.Add(label7);
             tabPage2.Controls.Add(label6);
             tabPage2.Controls.Add(dgvUsuarios);
             tabPage2.Controls.Add(btnEditarUsuario);
@@ -252,9 +277,123 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1361, 825);
+            tabPage2.Size = new Size(1623, 825);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Usuarios";
+            tabPage2.Text = "Usuarios y Prestamos";
+            // 
+            // dgvPrestamos
+            // 
+            dgvPrestamos.BackgroundColor = SystemColors.ControlDarkDark;
+            dgvPrestamos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPrestamos.Location = new Point(854, 280);
+            dgvPrestamos.Name = "dgvPrestamos";
+            dgvPrestamos.Size = new Size(716, 471);
+            dgvPrestamos.TabIndex = 23;
+            dgvPrestamos.CellClick += dgvPrestamos_CellClick;
+            dgvPrestamos.CellContentClick += dgvPrestamos_CellContentClick;
+            // 
+            // btnRegistrarDevolucion
+            // 
+            btnRegistrarDevolucion.BackColor = Color.LightCoral;
+            btnRegistrarDevolucion.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRegistrarDevolucion.Location = new Point(1068, 158);
+            btnRegistrarDevolucion.Name = "btnRegistrarDevolucion";
+            btnRegistrarDevolucion.Size = new Size(126, 27);
+            btnRegistrarDevolucion.TabIndex = 22;
+            btnRegistrarDevolucion.Text = "Registrar Devolucion";
+            btnRegistrarDevolucion.UseVisualStyleBackColor = false;
+            btnRegistrarDevolucion.Click += btnRegistrarDevolucion_Click;
+            // 
+            // btnRegistrarPrestamo
+            // 
+            btnRegistrarPrestamo.BackColor = Color.FromArgb(192, 255, 192);
+            btnRegistrarPrestamo.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRegistrarPrestamo.Location = new Point(854, 158);
+            btnRegistrarPrestamo.Name = "btnRegistrarPrestamo";
+            btnRegistrarPrestamo.Size = new Size(135, 27);
+            btnRegistrarPrestamo.TabIndex = 21;
+            btnRegistrarPrestamo.Text = "Registrar Prestamo";
+            btnRegistrarPrestamo.UseVisualStyleBackColor = false;
+            btnRegistrarPrestamo.Click += btnRegistrarPrestamo_Click;
+            // 
+            // dtpFechaPrestamo
+            // 
+            dtpFechaPrestamo.Location = new Point(1250, 97);
+            dtpFechaPrestamo.Name = "dtpFechaPrestamo";
+            dtpFechaPrestamo.Size = new Size(200, 23);
+            dtpFechaPrestamo.TabIndex = 20;
+            // 
+            // txtIdLibroPrestamo
+            // 
+            txtIdLibroPrestamo.Location = new Point(1115, 100);
+            txtIdLibroPrestamo.Name = "txtIdLibroPrestamo";
+            txtIdLibroPrestamo.Size = new Size(100, 23);
+            txtIdLibroPrestamo.TabIndex = 19;
+            // 
+            // txtIdUsuarioPrestamo
+            // 
+            txtIdUsuarioPrestamo.Location = new Point(985, 100);
+            txtIdUsuarioPrestamo.Name = "txtIdUsuarioPrestamo";
+            txtIdUsuarioPrestamo.Size = new Size(100, 23);
+            txtIdUsuarioPrestamo.TabIndex = 18;
+            // 
+            // txtIdPrestamo
+            // 
+            txtIdPrestamo.Location = new Point(854, 100);
+            txtIdPrestamo.Name = "txtIdPrestamo";
+            txtIdPrestamo.Size = new Size(100, 23);
+            txtIdPrestamo.TabIndex = 17;
+            // 
+            // lblIdPrestamo
+            // 
+            lblIdPrestamo.AutoSize = true;
+            lblIdPrestamo.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblIdPrestamo.Location = new Point(854, 80);
+            lblIdPrestamo.Name = "lblIdPrestamo";
+            lblIdPrestamo.Size = new Size(83, 17);
+            lblIdPrestamo.TabIndex = 16;
+            lblIdPrestamo.Text = "ID Prestamo";
+            // 
+            // lblIdUsuarioPrestamo
+            // 
+            lblIdUsuarioPrestamo.AutoSize = true;
+            lblIdUsuarioPrestamo.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblIdUsuarioPrestamo.Location = new Point(985, 80);
+            lblIdUsuarioPrestamo.Name = "lblIdUsuarioPrestamo";
+            lblIdUsuarioPrestamo.Size = new Size(71, 17);
+            lblIdUsuarioPrestamo.TabIndex = 15;
+            lblIdUsuarioPrestamo.Text = "ID Usuario";
+            // 
+            // lblIdLibroPrestamo
+            // 
+            lblIdLibroPrestamo.AutoSize = true;
+            lblIdLibroPrestamo.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblIdLibroPrestamo.Location = new Point(1115, 80);
+            lblIdLibroPrestamo.Name = "lblIdLibroPrestamo";
+            lblIdLibroPrestamo.Size = new Size(55, 17);
+            lblIdLibroPrestamo.TabIndex = 14;
+            lblIdLibroPrestamo.Text = "ID Libro";
+            // 
+            // lblFechaPrestamo
+            // 
+            lblFechaPrestamo.AutoSize = true;
+            lblFechaPrestamo.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFechaPrestamo.Location = new Point(1250, 82);
+            lblFechaPrestamo.Name = "lblFechaPrestamo";
+            lblFechaPrestamo.Size = new Size(91, 15);
+            lblFechaPrestamo.TabIndex = 13;
+            lblFechaPrestamo.Text = "Fecha Prestamo";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.BackColor = Color.SteelBlue;
+            label7.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(854, 16);
+            label7.Name = "label7";
+            label7.Size = new Size(277, 37);
+            label7.TabIndex = 12;
+            label7.Text = "Prestamos de Libros";
             // 
             // label6
             // 
@@ -280,7 +419,7 @@
             // btnEditarUsuario
             // 
             btnEditarUsuario.BackColor = Color.LightSkyBlue;
-            btnEditarUsuario.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnEditarUsuario.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEditarUsuario.Location = new Point(160, 210);
             btnEditarUsuario.Name = "btnEditarUsuario";
             btnEditarUsuario.Size = new Size(75, 27);
@@ -292,7 +431,7 @@
             // btnEliminarUsuario
             // 
             btnEliminarUsuario.BackColor = Color.LightCoral;
-            btnEliminarUsuario.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnEliminarUsuario.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEliminarUsuario.Location = new Point(287, 210);
             btnEliminarUsuario.Name = "btnEliminarUsuario";
             btnEliminarUsuario.Size = new Size(75, 27);
@@ -304,7 +443,7 @@
             // btnAgregarUsuario
             // 
             btnAgregarUsuario.BackColor = Color.FromArgb(192, 255, 192);
-            btnAgregarUsuario.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAgregarUsuario.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAgregarUsuario.Location = new Point(30, 210);
             btnAgregarUsuario.Name = "btnAgregarUsuario";
             btnAgregarUsuario.Size = new Size(75, 27);
@@ -379,7 +518,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveBorder;
-            ClientSize = new Size(1398, 921);
+            ClientSize = new Size(1663, 921);
             Controls.Add(tabControl1);
             Name = "FrmPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
@@ -390,6 +529,7 @@
             tabPage1.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvPrestamos).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
             ResumeLayout(false);
         }
@@ -424,5 +564,17 @@
         private Label lblNombreUsuario;
         private Label lblIdUsuario;
         private Label label6;
+        private Label lblIdPrestamo;
+        private Label lblIdUsuarioPrestamo;
+        private Label lblIdLibroPrestamo;
+        private Label lblFechaPrestamo;
+        private Label label7;
+        private DataGridView dgvPrestamos;
+        private Button btnRegistrarDevolucion;
+        private Button btnRegistrarPrestamo;
+        private DateTimePicker dtpFechaPrestamo;
+        private TextBox txtIdLibroPrestamo;
+        private TextBox txtIdUsuarioPrestamo;
+        private TextBox txtIdPrestamo;
     }
 }

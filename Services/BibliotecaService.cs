@@ -8,6 +8,8 @@ namespace GestorBiblioteca.Services
     {
         private List<Libro> libros = new List<Libro>();
         private List<Usuario> usuarios = new List<Usuario>();
+        private List<Prestamo> prestamos = new List<Prestamo>();
+
 
         // ==============================
         // CRUD DE LIBROS
@@ -97,5 +99,68 @@ namespace GestorBiblioteca.Services
             usuarios.Remove(usuario);
             return true;
         }
+
+        // ==============================
+        // CRUD DE PRESTAMOS
+        // ==============================
+
+        public List<Prestamo> ObtenerPrestamos()
+        {
+            return prestamos.OrderBy(p => p.Id).ToList();
+        }
+
+        public bool ExistePrestamo(int id)
+        {
+            return prestamos.Any(p => p.Id == id);
+        }
+
+        public bool RegistrarPrestamo(Prestamo prestamo)
+        {
+            var usuario = usuarios.FirstOrDefault(u => u.Id == prestamo.IdUsuario);
+            var libro = libros.FirstOrDefault(l => l.Id == prestamo.IdLibro);
+
+            if (usuario == null || libro == null)
+                return false;
+
+            if (!usuario.Activo)
+                return false;
+
+            if (!libro.Disponible)
+                return false;
+
+            prestamos.Add(prestamo);
+            libro.Disponible = false;
+
+            return true;
+        }
+
+        public bool RegistrarDevolucion(int idPrestamo)
+        {
+            var prestamo = prestamos.FirstOrDefault(p => p.Id == idPrestamo);
+
+            if (prestamo == null)
+                return false;
+
+            if (prestamo.Estado == "Devuelto")
+                return false;
+
+            prestamo.Estado = "Devuelto";
+            prestamo.FechaDevolucion = DateTime.Now;
+
+            var libro = libros.FirstOrDefault(l => l.Id == prestamo.IdLibro);
+            if (libro != null)
+                libro.Disponible = true;
+
+            return true;
+        }
+
+        public List<Prestamo> ObtenerPrestamosPorUsuario(int idUsuario)
+        {
+            return prestamos
+                .Where(p => p.IdUsuario == idUsuario)
+                .OrderBy(p => p.Id)
+                .ToList();
+        }
+
     }
 }
